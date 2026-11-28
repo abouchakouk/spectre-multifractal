@@ -73,7 +73,7 @@ def simuler(sigma: float) -> dict:
     log2S = np.empty((R, len(QUANTITES), len(ECHELLES), P.size))
     for r in range(R):
         y = ajouter_bruit(simuler_wcascade(n, M, B, rng, ONDELETTE), sigma, rng)
-        c = coefficients_ondelettes(y, ONDELETTE)
+        c = coefficients_ondelettes(y, ONDELETTE, normalisation="L1")
         for q, m in enumerate((increments(y), c, leaders(c), leaders(c, j_max))):
             log2S[r, q] = log2S_sur_echelles(m, P)
     zeta = np.empty((R, len(QUANTITES), P.size))

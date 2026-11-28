@@ -12,7 +12,7 @@ m, b = 0.5, 0.025
 def test_wcascade_coefficients_exacts():
     """La transformée directe redonne exactement les coefficients fabriqués (pas d'initialisation)."""
     x, c = simuler_wcascade(2**12, m, b, np.random.default_rng(0), avec_coefficients=True)
-    mc = coefficients_ondelettes(x)
+    mc = coefficients_ondelettes(x, normalisation="L1")   # la cascade fabrique des c (L1)
     assert mc.echelles == sorted(c)
     for j in c:
         assert np.allclose(mc.valeurs[j], c[j], atol=1e-10)
@@ -26,7 +26,7 @@ def test_wcascade_zeta_coefficients():
     for _ in range(30):
         mc = coefficients_ondelettes(simuler_wcascade(2**15, m, b, rng))
         js, l, _ = log2_structure(mc, P, range(3, 15))
-        z.append(estimer_zeta(js, l, 6, 13))
+        z.append(estimer_zeta(js, l, 6, 13) - P / 2)       # L2 : zeta = zeta_d - p/2
     assert np.allclose(np.median(z, axis=0), zeta_theorique(P, m, b), atol=0.05)
 
 

@@ -101,4 +101,5 @@ def test_chaine_fbm_leaders():
     L = leaders(coefficients_ondelettes(simuler_fbm(2**14, H, rng)))
     p = np.array([-2.0, -1.0, 1.0, 2.0])
     js, log2S, _ = log2_structure(L, p)
-    assert np.allclose(estimer_zeta(js, log2S, 5, 12), p * H, atol=0.15)
+    zeta = estimer_zeta(js, log2S, 5, 12) - p / 2        # L2 : zeta = zeta_d - p/2
+    assert np.allclose(zeta, p * H, atol=0.15)

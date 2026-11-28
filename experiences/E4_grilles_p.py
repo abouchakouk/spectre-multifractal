@@ -81,7 +81,7 @@ def simuler(sigma):
     zeta = np.empty((R, P_TOUS.size))
     for r in range(R):
         y = ajouter_bruit(simuler_wcascade(n, M, B, rng, ONDELETTE), sigma, rng)
-        js, l, _ = log2_structure(leaders(coefficients_ondelettes(y, ONDELETTE)), P_TOUS, range(3, 15))
+        js, l, _ = log2_structure(leaders(coefficients_ondelettes(y, ONDELETTE, normalisation="L1")), P_TOUS, range(3, 15))
         zeta[r] = estimer_zeta(js, l, J1, J2)
     return dict(sigma=sigma, p=P_TOUS, zeta=zeta)
 

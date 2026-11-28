@@ -48,7 +48,7 @@ def simuler(H: float) -> dict:
     nb = np.empty((R, len(QUANTITES), len(ECHELLES)), dtype=int)
     for r in range(R):
         x = simuler_fbm(n, H, rng)            # sigma = 0 : pas de bruit ajouté
-        c = coefficients_ondelettes(x, ONDELETTE)
+        c = coefficients_ondelettes(x, ONDELETTE, normalisation="L1")
         for q, m in enumerate((increments(x), c, leaders(c))):
             js, log2S[r, q], nb[r, q] = log2_structure(m, P, ECHELLES)
     zeta = np.array([[estimer_zeta(js, log2S[r, q], j1, j2) for q in range(len(QUANTITES))]

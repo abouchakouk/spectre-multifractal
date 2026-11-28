@@ -84,7 +84,7 @@ def simuler(nom):
     for r in range(R):
         x = mod["simuler"](rng)
         xi = rng.standard_normal(n)
-        cx, cxi = coefficients_ondelettes(x, ONDELETTE), coefficients_ondelettes(xi, ONDELETTE)
+        cx, cxi = coefficients_ondelettes(x, ONDELETTE, normalisation="L1"), coefficients_ondelettes(xi, ONDELETTE)
         for i, s in enumerate(SIGMAS):
             cb = coefficients_ondelettes(s * xi, ONDELETTE)
             cy = coefficients_ondelettes(x + s * xi, ONDELETTE)

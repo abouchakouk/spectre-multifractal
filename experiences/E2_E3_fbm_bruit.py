@@ -73,7 +73,7 @@ def simuler(H: float, sigma: float) -> dict:
     log2S = np.empty((R, len(QUANTITES), len(ECHELLES), P.size))
     for r in range(R):
         y = ajouter_bruit(simuler_fbm(n, H, rng), sigma, rng)
-        c = coefficients_ondelettes(y, ONDELETTE)
+        c = coefficients_ondelettes(y, ONDELETTE, normalisation="L1")
         for q, m in enumerate((increments(y), c, leaders(c), leaders(c, j_max))):
             log2S[r, q] = log2S_sur_echelles(m, P)
     zeta_E2 = np.array([[estimer_zeta(js, log2S[r, q], J1, J2) for q in range(3)] for r in range(R)])
