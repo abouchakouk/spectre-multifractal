@@ -57,3 +57,14 @@ def test_sans_bruit_inchange():
     for j in L.echelles:
         assert np.array_equal(L.valeurs[j], Ls.valeurs[j])
     assert plage_donnees(Ls, j2_plafond=11) == (6, 11)
+
+
+def test_lemme_leaders_seuilles():
+    """Lemme : leaders(seuiller(d, lam)) = L * 1{L > lam}, avec L = leaders(d)."""
+    rng = np.random.default_rng(2)
+    d = coefficients_ondelettes(ajouter_bruit(rng.standard_normal(2**12).cumsum() / 64, 0.3, rng))
+    L = leaders(d)
+    for lam in (0.0, 0.002, 0.01, 0.05):
+        Ls = leaders(seuiller(d, lam))
+        for j in L.echelles:
+            assert np.array_equal(Ls.valeurs[j], np.where(L.valeurs[j] > lam, L.valeurs[j], 0.0))
